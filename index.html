@@ -11,6 +11,72 @@
         <h1>🍔 National Hamburger Day</h1>
         <p>Celebrate the iconic burger on May 28! Originating in the USA, Hamburger Day likely started as a fast-food marketing push, tied to the history of hamburgers from 19th-century German immigrants. Now a global symbol, let's see how many Big Macs your country's median salary can buy! 🎉</p>
     </header>
+    
+ <canvas id="myCanvasI" width="170" height="100"></canvas>
+ <canvas id="myCanvasLove" width="170" height="100"></canvas>
+<canvas id="myCanvasHum" width="170" height="100"></canvas>
+ 
+<script> 
+fillIcon('myCanvasI', 'I');
+fillIcon('myCanvasLove', '❤️');
+fillIcon('myCanvasHum', '🍔');
+
+function fillIcon(containerId, percent) {
+//const canvas = document.getElementById('myCanvas'); 
+const canvas = document.getElementById(containerId); 
+const ctx = canvas.getContext('2d'); // 房子參數 
+const houseWidth = 70; 
+const houseHeight = 60; 
+const roofHeight = 20; const houseX = (canvas.width-houseWidth)*0.5; const houseY = 100; // 波浪參數 
+let waveHeight = houseHeight * 0.5; // 70% 填充 
+let waveOffset = 50; 
+
+function drawHouse() { 
+ctx.save();
+ctx.beginPath(); // 房子主體（矩形） 
+ctx.moveTo(houseX, houseY); 
+ctx.lineTo(houseX + houseWidth, houseY); 
+ctx.lineTo(houseX + houseWidth, houseY - houseHeight); 
+ctx.lineTo(houseX, houseY - houseHeight); ctx.closePath(); // 屋頂（三角形） 
+ctx.moveTo(houseX, houseY - houseHeight); ctx.lineTo(houseX + houseWidth / 2, houseY - houseHeight - roofHeight); 
+ctx.lineTo(houseX + houseWidth, houseY - houseHeight); 
+ctx.closePath(); ctx.stroke();
+ctx.restore();
+
+ctx.save();
+ctx.font = '20px Arial';
+    ctx.fillStyle = 'black'; // 文字顏色
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    //ctx.fillText('70%', houseX + houseWidth / 2, houseY - 30); 
+    ctx.fillText(percent, houseX + houseWidth / 2, houseY - 30); 
+ctx.restore();
+
+} 
+
+
+function drawWaveMask() { 
+ctx.save(); ctx.beginPath(); // 波浪曲線 
+
+for (let x = 0; x < canvas.width; x++) 
+{ 
+const y = waveHeight + Math.sin((x + waveOffset) * 0.04) * 10; 
+ctx.lineTo(x, canvas.height - y); 
+} 
+ctx.lineTo(canvas.width, canvas.height); 
+ctx.lineTo(0, canvas.height); ctx.closePath(); ctx.clip(); // 填充房子 
+
+ctx.fillStyle = 'lightgray';//'lavender'; 
+drawHouse(); ctx.fill(); ctx.restore(); } 
+function animate() { 
+ctx.clearRect(0, 0, canvas.width, canvas.height); drawHouse(); // 畫房子輪廓 
+drawWaveMask(); // 畫波浪遮罩 
+waveOffset += 1; // 波浪移動 
+requestAnimationFrame(animate); 
+}
+ animate(); 
+}
+</script>
     <main>
         <h2>Big Macs by Median Salary</h2>
         <div class="burger-chart">
