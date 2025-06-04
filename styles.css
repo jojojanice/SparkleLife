@@ -25,6 +25,11 @@ h2 {
     text-shadow: 0 0 10px #ff4444;
 }
 
+section {
+    margin: 20px 0;
+    padding: 20px;
+}
+
 .burger-chart {
     display: flex;
     flex-wrap: wrap;
